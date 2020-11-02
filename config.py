@@ -3,7 +3,7 @@
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
 
-def logic(lights: (int, int), bump: int) -> (int, int):
+def logic(lights: (int, int), bump: int) -> (int, int, bool):
     """ logic
     
     Parameters
@@ -16,10 +16,11 @@ def logic(lights: (int, int), bump: int) -> (int, int):
 
     Returns
     -------
-        (int, int)
-    left motor dir and right motor dir
+        (int, int, bool)
+    left motor dir and right motor dir and motor status
     """
     left_dir = 0    # left dir output
     right_dir = 0   # right dir output
+    motor = False   # motor status
 
-    return (left_dir, right_dir)
+    return (left_dir, right_dir, motor)
