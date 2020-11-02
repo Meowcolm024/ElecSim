@@ -30,18 +30,18 @@ def logic(lights: (int, int), bump: int) -> (int, int, bool):
     leftSensor = lights[0]
     rightSensor = lights[1]
 
-    if not leftSensor:
-        left_dir = LOW
-        right_dir = HIGH
-    else:
-        left_dir = HIGH
-        if rightSensor:
-            right_dir = HIGH
-        else:
-            right_dir = LOW
+    # if not leftSensor:
+    #     left_dir = LOW
+    #     right_dir = HIGH
+    # else:
+    #     left_dir = HIGH
+    #     if rightSensor:
+    #         right_dir = HIGH
+    #     else:
+    #         right_dir = LOW
 
-    # left_dir = leftSensor//255
-    # right_dir = rightSensor//255
+    left_dir = leftSensor//255
+    right_dir = rightSensor//255
     
     motor = True
 

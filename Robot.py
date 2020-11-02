@@ -24,6 +24,7 @@ class Robot(Sprite):
         self.sensors = (0, 0)                   # left sensor and right sensor input
         self.bump_sensor = 0                    # bump sensor input
         self.motors = (0, 0, False)             # motor output and status
+        self.title = ''
 
     def logic(self):
         self.motors = config.logic(self.sensors, self.bump_sensor)
@@ -34,11 +35,11 @@ class Robot(Sprite):
 
         x = self.rect.centerx               # robot center
         y = self.rect.centery               # robot center
-        l = 80
+        l = 60
         a = math.pi/4
-        left_sensor = (int(x + l*math.cos(a+self.angle)), int(y + l*math.sin(a+self.angle)))   # !!!
-        right_sensor = (int(x + l*math.cos(a-self.angle)), int(y + l*math.sin(a+self.angle)))  # !!!
-        print(left_sensor, right_sensor)    
+        left_sensor = (int(x + l*math.sin(a+self.angle)), int(y - l*math.cos(a+self.angle)))   # !!!
+        right_sensor = (int(x + l*math.sin(-a+self.angle)), int(y - l*math.cos(-a+self.angle)))  # !!!
+        self.title = f'Center: {(x,y)} L: {left_sensor} R: {right_sensor}'    
         self.sensors = (
             shift(self.test_map[left_sensor[1]][left_sensor[0]]),
             shift(self.test_map[right_sensor[1]][right_sensor[0]])
@@ -47,7 +48,7 @@ class Robot(Sprite):
     def move(self):        
         (l, r, s) = self.motors
         m = (l, r)
-        v = 3
+        v = 1
         (vy, vx) = (v*math.cos(self.angle), v*math.sin(self.angle))
         if not s:
             return
@@ -56,9 +57,9 @@ class Robot(Sprite):
         elif m == (0, 0):
             self.rect.move_ip(vx, vy)
         elif m == (1, 0):
-            self.angle +=0.2
+            self.angle += math.pi/12
         elif m == (0, 1):
-            self.angle -=0.2
+            self.angle -= math.pi/12
 
     def update(self, k):
         self.detect_track()
