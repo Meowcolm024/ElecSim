@@ -18,7 +18,7 @@ class Robot(Sprite):
         self.image = pygame.image.load('assets/testr.png').convert_alpha()
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()       # ? initialize the location of the robot
-        self.rect.move_ip(85, 0)
+        self.rect.move_ip(85, 50)
         self.angle = math.pi                    # angle the car facing
         self.test_map = cv2.imread('assets/testc.png', cv2.IMREAD_GRAYSCALE)  # info of the map for the sensors (2D matrix)
         self.sensors = (0, 0)                   # left sensor and right sensor input
@@ -35,11 +35,11 @@ class Robot(Sprite):
 
         x = self.rect.centerx               # robot center
         y = self.rect.centery               # robot center
-        l = 60
-        a = math.pi/4
-        left_sensor = (int(x + l*math.sin(a+self.angle)), int(y - l*math.cos(a+self.angle)))   # !!!
-        right_sensor = (int(x + l*math.sin(-a+self.angle)), int(y - l*math.cos(-a+self.angle)))  # !!!
-        self.title = f'Center: {(x,y)} L: {left_sensor} R: {right_sensor}'    
+        l = 20
+        a = math.pi/2.1
+        left_sensor = (int(x + l*math.sin(a+self.angle)), int(y + l*math.cos(a+self.angle)))   # !!!
+        right_sensor = (int(x + l*math.sin(-a+self.angle)), int(y + l*math.cos(-a+self.angle)))  # !!!
+        self.title = f'Center: {(x,y)} Dir: {int(360*self.angle/(2*math.pi))} L: {left_sensor} R: {right_sensor}'    
         self.sensors = (
             shift(self.test_map[left_sensor[1]][left_sensor[0]]),
             shift(self.test_map[right_sensor[1]][right_sensor[0]])
@@ -48,7 +48,7 @@ class Robot(Sprite):
     def move(self):        
         (l, r, s) = self.motors
         m = (l, r)
-        v = 1
+        v = 3
         (vy, vx) = (v*math.cos(self.angle), v*math.sin(self.angle))
         if not s:
             return
@@ -57,9 +57,9 @@ class Robot(Sprite):
         elif m == (0, 0):
             self.rect.move_ip(vx, vy)
         elif m == (1, 0):
-            self.angle += math.pi/12
+            self.angle += math.pi/10
         elif m == (0, 1):
-            self.angle -= math.pi/12
+            self.angle -= math.pi/10
 
     def update(self, k):
         self.detect_track()

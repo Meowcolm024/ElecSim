@@ -46,4 +46,4 @@ while running:
         screen.blit(rot, entity.rect)
     
     pygame.display.update()
-    clock.tick(30)
+    clock.tick(60)
