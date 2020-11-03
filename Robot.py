@@ -18,7 +18,7 @@ class Robot(Sprite):
         self.image = pygame.image.load(ROBOT_IMG).convert_alpha()
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
-        self.rect.move_ip(INIT_LOC[0], INIT_LOC[1])
+        self.rect.move_ip(INIT_LOC[0], INIT_LOC[1])  # move to initial position
         self.angle = math.pi  # angle the car facing
         # info of the map for the sensors (2D matrix)
         self.test_map = cv2.imread(MAP_IMG, cv2.IMREAD_GRAYSCALE)
@@ -32,10 +32,11 @@ class Robot(Sprite):
     def logic(self):
         left_dir = 0  # left dir output
         right_dir = 0  # right dir output
-        motor = self.bump_sensor  # motor status
+        motor = False  # motor status
         LOW = 0  # output LOW
         HIGH = 1  # output HIGH
         (leftSensor, rightSensor) = self.sensors
+        bumpSensor = self.bump_sensor
 
         ##### CODE STARTS HERE #####
 
@@ -57,6 +58,7 @@ class Robot(Sprite):
 
     def detect_track(self):
         def sample(p, q):
+            # take 9x9 sample
             t = self.test_map
             tmp = 0
             for i in [-1, 0, 1]:
@@ -66,6 +68,7 @@ class Robot(Sprite):
             return 255 if tsu > 0.5 else 0
 
         def shift(x):
+            # as we are using greysccale, it is inverted
             return 1 if x < 100 else 0
 
         x = self.rect.centerx  # robot center

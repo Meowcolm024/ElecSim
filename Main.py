@@ -10,7 +10,7 @@ from Robot import Robot
 from config import *
 
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode(CANVAS)
 pygame.display.set_caption('ElecSim')
 clock = pygame.time.Clock()
 
@@ -20,12 +20,11 @@ all_sprites = pygame.sprite.Group()
 robot = Robot()
 all_sprites.add(robot)
 
-txt = ''
 font = pygame.font.Font('freesansbold.ttf', 20)
-text1 = font.render(txt, True, (0, 255, 0), (0, 0, 0))
+text1 = font.render('', True, (0, 255, 0), (0, 0, 0))
 textRect1 = text1.get_rect()
 textRect1.center = (250, 40)
-text2 = font.render(txt, True, (0, 255, 0), (0, 0, 0))
+text2 = font.render('', True, (0, 255, 0), (0, 0, 0))
 textRect2 = text2.get_rect()
 textRect2.center = (250, 70)
 
