@@ -3,7 +3,7 @@
 Including:
 
 - The robot:
-  - `textr.png` (100x80)
+  - `testr.png` (100x80)
 
 - Image of the track:
   - `testc0.png` (800x600)

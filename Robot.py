@@ -58,7 +58,7 @@ class Robot(Sprite):
 
     def detect_track(self):
         def sample(p, q):
-            # take 9x9 sample
+            # take 5x5 sample
             t = self.test_map
             tmp = 0
             for i in range(-2,3):
