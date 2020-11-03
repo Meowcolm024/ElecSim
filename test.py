@@ -1,7 +1,7 @@
 import cv2
 import numpy
 
-img = cv2.imread('assets/testc.png', cv2.IMREAD_GRAYSCALE)   
+img = cv2.imread('assets/testc2.png', cv2.IMREAD_GRAYSCALE)   
 
 # print(img[53][35]//255)
 

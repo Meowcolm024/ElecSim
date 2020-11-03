@@ -19,7 +19,7 @@ class Robot(Sprite):
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()       # ? initialize the location of the robot
         self.rect.move_ip(INIT_LOC[0], INIT_LOC[1])
-        self.angle = math.pi                    # angle the car facing
+        self.angle = math.pi*(4/4)                    # angle the car facing
         self.test_map = cv2.imread(MAP_IMG, cv2.IMREAD_GRAYSCALE)  # info of the map for the sensors (2D matrix)
         self.title = ('', '')
         # internal output
@@ -56,17 +56,27 @@ class Robot(Sprite):
         self.motors = (left_dir, right_dir, motor)
     
     def detect_track(self):
+        def sample(p, q):
+            t = self.test_map
+            tmp = 0
+            for i in [-1,0,1]:
+                for j in [-1,0,1]:
+                    tmp += t[p+i][q+1]
+            tsu = tmp / (9*255)
+            return 255 if tsu > 0.5 else 0
+
         def shift(x):
-            return 255 if x == 0 else 0
+            return 1 if x < 100 else 0
 
         x = self.rect.centerx               # robot center
         y = self.rect.centery               # robot center
-        l = 20
-        a = math.pi/2.1
-        left_sensor = (int(x + l*math.sin(a+self.angle)), int(y + l*math.cos(a+self.angle)))   # !!!
-        right_sensor = (int(x + l*math.sin(-a+self.angle)), int(y + l*math.cos(-a+self.angle)))  # !!!
-        ls = shift(self.test_map[left_sensor[1]][left_sensor[0]])
-        rs = shift(self.test_map[right_sensor[1]][right_sensor[0]])
+        l = 30
+        a = math.pi/4
+        # ! NOT CORRECT
+        left_sensor = (int(x + l*math.cos((3*math.pi/2)+a-self.angle)), int(y + l*math.sin((3*math.pi/2)+a-self.angle)))   # !!!
+        right_sensor = (int(x + l*math.cos((3*math.pi/2)-a-self.angle)), int(y + l*math.sin((3*math.pi/2)-a-self.angle)))  # !!!
+        ls = shift(sample(left_sensor[1], left_sensor[0]))
+        rs = shift(sample(right_sensor[1],right_sensor[0]))
         self.title = (f'Center: {(x,y)} Dir: {int(360*self.angle/(2*math.pi))} L: {left_sensor} R: {right_sensor}',
             f'L_Sensor: {ls}  R_Sensor: {rs}')   
         self.sensors = (ls, rs)
@@ -74,7 +84,7 @@ class Robot(Sprite):
     def move(self):        
         (l, r, s) = self.motors
         m = (l, r)
-        v = 3
+        v = 4
         (vy, vx) = (v*math.cos(self.angle), v*math.sin(self.angle))
         if not s:
             return
@@ -83,23 +93,14 @@ class Robot(Sprite):
         elif m == (0, 0):
             self.rect.move_ip(vx, vy)
         elif m == (1, 0):
-            self.angle += math.pi/10
+            self.angle += math.pi/96
+            # self.rect.move_ip(-math.cos(self.angle), -math.sin(self.angle))
         elif m == (0, 1):
-            self.angle -= math.pi/10
+            self.angle -= math.pi/96
+            # self.rect.move_ip(-math.cos(self.angle), -math.sin(self.angle))
 
     def update(self, k):
         self.detect_track()
         self.logic()
-
-        # if k[K_w]:
-        #     self.motors = (1, 1, True)
-        # elif k[K_s]:
-        #     self.motors = (0 ,0, True)
-        # elif k[K_a]:
-        #     self.motors = (1, 0, True)
-        # elif k[K_d]:
-        #     self.motors = (0, 1, True)
-        # else:
-        #     self.motors = (0, 0, False)
         
         self.move()

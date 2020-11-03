@@ -52,4 +52,4 @@ while running:
         screen.blit(rot, entity.rect)
     
     pygame.display.update()
-    clock.tick(60)
+    clock.tick(TICK_SPEED)
