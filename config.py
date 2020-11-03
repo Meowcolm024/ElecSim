@@ -8,7 +8,7 @@ TICK_SPEED = 60
 ROBOT_IMG = 'assets/testr.png'
 
 MAP_IMG = 'assets/testc2.png'
-INIT_LOC = (85, 50)
+INIT_LOC = (85, 20)
 
 # MAP_IMG = 'assets/testc1.png'
 # INIT_LOC = (50, 290)

@@ -1,5 +1,5 @@
 # Copyright (c) 2020 Malcolm Law
-# 
+#
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
 
@@ -21,13 +21,13 @@ robot = Robot()
 all_sprites.add(robot)
 
 txt = ''
-font = pygame.font.Font('freesansbold.ttf', 20) 
-text1 = font.render(txt, True, (0, 255, 0), (0, 0, 0)) 
+font = pygame.font.Font('freesansbold.ttf', 20)
+text1 = font.render(txt, True, (0, 255, 0), (0, 0, 0))
 textRect1 = text1.get_rect()
-textRect1.center = (250, 40) 
-text2 = font.render(txt, True, (0, 255, 0), (0, 0, 0)) 
+textRect1.center = (250, 40)
+text2 = font.render(txt, True, (0, 255, 0), (0, 0, 0))
 textRect2 = text2.get_rect()
-textRect2.center = (250, 70) 
+textRect2.center = (250, 70)
 
 running = True
 while running:
@@ -41,15 +41,16 @@ while running:
     k = pygame.key.get_pressed()
     robot.update(k)
 
-    text1 = font.render(robot.title[0], True, (255, 255, 255), (0, 0, 0)) 
+    text1 = font.render(robot.title[0], True, (255, 255, 255), (0, 0, 0))
     text2 = font.render(robot.title[1], True, (255, 255, 255), (0, 0, 0))
 
     screen.blit(background, (0, 0))
-    screen.blit(text1, textRect1) 
+    screen.blit(text1, textRect1)
     screen.blit(text2, textRect2)
     for entity in all_sprites:
-        rot = pygame.transform.rotate(entity.image, 360*entity.angle/(2*math.pi))
+        rot = pygame.transform.rotate(
+            entity.image, 360*entity.angle/(2*math.pi))
         screen.blit(rot, entity.rect)
-    
+
     pygame.display.update()
     clock.tick(TICK_SPEED)
