@@ -61,10 +61,10 @@ class Robot(Sprite):
             # take 9x9 sample
             t = self.test_map
             tmp = 0
-            for i in [-1, 0, 1]:
-                for j in [-1, 0, 1]:
+            for i in range(-2,3):
+                for j in range(-2,3):
                     tmp += t[p+i][q+1]
-            tsu = tmp / (9*255)
+            tsu = tmp / (15*255)
             return 255 if tsu > 0.5 else 0
 
         def shift(x):
@@ -73,11 +73,11 @@ class Robot(Sprite):
 
         x = self.rect.centerx  # robot center
         y = self.rect.centery  # robot center
-        l = 30  # sensor off set
+        l = 25  # sensor off set
         a = math.pi/4  # off-set angle
-        left_sensor = (int(x + l*math.cos((3*math.pi/2)+a-self.angle)),
+        right_sensor = (int(x + l*math.cos((3*math.pi/2)+a-self.angle)),
                        int(y + l*math.sin((3*math.pi/2)+a-self.angle)))
-        right_sensor = (int(x + l*math.cos((3*math.pi/2)-a-self.angle)),
+        left_sensor = (int(x + l*math.cos((3*math.pi/2)-a-self.angle)),
                         int(y + l*math.sin((3*math.pi/2)-a-self.angle)))
         ls = shift(sample(left_sensor[1], left_sensor[0]))
         rs = shift(sample(right_sensor[1], right_sensor[0]))
@@ -97,9 +97,9 @@ class Robot(Sprite):
         elif m == (0, 0):
             self.rect.move_ip(vx, vy)
         elif m == (1, 0):
-            self.angle += math.pi/96
-        elif m == (0, 1):
             self.angle -= math.pi/96
+        elif m == (0, 1):
+            self.angle += math.pi/96
 
     def update(self, k):
         self.detect_track()
