@@ -64,7 +64,7 @@ class Robot(Sprite):
             for i in range(-2,3):
                 for j in range(-2,3):
                     tmp += t[p+i][q+1]
-            tsu = tmp / (15*255)
+            tsu = tmp / (25*255)
             return 255 if tsu > 0.5 else 0
 
         def shift(x):

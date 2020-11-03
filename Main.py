@@ -51,5 +51,6 @@ while running:
             entity.image, 360*entity.angle/(2*math.pi))
         screen.blit(rot, entity.rect)
 
+    pygame.display.set_caption(f'ElecSim T: {pygame.time.get_ticks()//1000}')
     pygame.display.update()
     clock.tick(TICK_SPEED)
